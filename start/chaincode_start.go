@@ -24,7 +24,14 @@ import (
 )
 
 // SimpleChaincode example simple Chaincode implementation
-type SimpleChaincode struct {
+type Truck struct {
+	Address string 'json:"address"'
+	Lattitude string 'json:"lat"'
+	Longitude string 'json:"long"'
+	Name string 'json:"name"'
+	Status string 'json:"status"'
+	Time string 'json:"time"'
+	Type string 'json:"type"'
 }
 
 // ============================================================================================================================
@@ -42,7 +49,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	var TruckA, TruckB string
 	var truckALoc, truckBLoc int
 	var err error
-
+	shim.SetLoggingLevel(shim.LogLevel("DEBUG"))
 
 	if len(args) != 4 {
 		return nil, errors.New("Incorrect number of arguments. Expecting 4")
@@ -91,6 +98,22 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 
 	// Handle different functions
 	if function == "query" {
+
+		truck := Truck{
+			Address: "1,Delhi"
+			Lattitude: "1.2"
+			Longitude:"1.3"
+			Name:"Vinayak"
+			Status:"Enroute"
+			Time:"33:88"
+			Type:"16 Wheeler"
+		}
+
+		out, err :=	json.Marshal(truck)
+		if err != nil {
+		fmt.Println("error:", err)
+		}
+
 		var TruckA string
 	//	var err error
 		if len(args) != 1 {
@@ -103,7 +126,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 			jsonResp :="{\"Error\":\"Failed to get state for" + TruckA + "\"}"
 			return nil, errors.New(jsonResp)
 		}
-		return Avalbytes, nil
+		return out, nil
 	}
 	fmt.Println("query did not find func: " + function)						//error
 	return nil, errors.New("Received unknown function query: " + function)
