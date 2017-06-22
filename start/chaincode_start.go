@@ -61,11 +61,11 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 		return nil, errors.New("Expecting int value for truck B location");
 	}
 
-	err = stub.PutState(A, []byte(strconv.Itoa(truckALoc)))
+	err = stub.PutState(TruckA, []byte(strconv.Itoa(truckALoc)))
 	if err != nil {
 		return nil, err
 	}
-	err = stub.PutState(B, []byte(strconv.Itoa(truckBLoc)))
+	err = stub.PutState(TruckB, []byte(strconv.Itoa(truckBLoc)))
 	if err != nil {
 		return nil, err
 	}
