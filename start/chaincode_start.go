@@ -99,7 +99,10 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 		TruckA = args[0] //read a variable
 		//Get state from ledger
 		Avalbytes, err := stub.GetState(TruckA)
-
+		if err != nil {
+			jsonResp :="{\"Error\":\"Failed to get state for" + TruckA + "\"}"
+			return nil, errors.New(jsonResp)
+		}
 		return Avalbytes, nil
 	}
 	fmt.Println("query did not find func: " + function)						//error
