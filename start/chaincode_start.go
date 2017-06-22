@@ -24,14 +24,14 @@ import (
 )
 
 // SimpleChaincode example simple Chaincode implementation
-type Truck struct {
-	Address string 'json:"address"'
-	Lattitude string 'json:"lat"'
-	Longitude string 'json:"long"'
-	Name string 'json:"name"'
-	Status string 'json:"status"'
-	Time string 'json:"time"'
-	Type string 'json:"type"'
+type Truck struct{
+	Address string `json:"address"`
+	Lattitude string `json:"lat"`
+	Longitude string `json:"long"`
+	Name string `json:"name"`
+	Status string `json:"status"`
+	Time string `json:"time"`
+	Type string `json:"type"'
 }
 
 // ============================================================================================================================
