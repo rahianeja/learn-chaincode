@@ -19,7 +19,7 @@ package main
 import (
 	"errors"
 	"fmt"
-
+	"strconv"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
 
@@ -39,10 +39,36 @@ func main() {
 
 // Init resets all the things
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	if len(args) != 1 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 1")
+	var TruckA, TruckB string
+	var truckALoc, truckBLoc Int
+	var err error
+
+
+	if len(args) != 4 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 4")
 	}
 
+	//initialize the chaincode
+	TruckA = args[0];
+	truckALoc, err = strconv.Atoi(args[1]);
+	if err != nil {
+		return nil, errors.New("Expecting int value for truck A location");
+	}
+
+	TruckB = args[2];
+	truckBLoc, err = strconv.Atoi(args[3]);
+	if err != nil {
+		return nil, errors.New("Expecting int value for truck B location");
+	}
+
+	err = stub.PutState(A, []byte(strconv.Itoa(truckALoc)))
+	if err != nil {
+		return nil, err
+	}
+	err = stub.PutState(B, []byte(strconv.Itoa(truckBLoc)))
+	if err != nil {
+		return nil, err
+	}
 	return nil, nil
 }
 
