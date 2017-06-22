@@ -21,9 +21,12 @@ import (
 	"fmt"
 	"strconv"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
+	"encoding/json"
 )
 
 // SimpleChaincode example simple Chaincode implementation
+type SimpleChaincode struct{
+}
 type Truck struct{
 	Address string `json:"address"`
 	Lattitude string `json:"lat"`
@@ -49,7 +52,8 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	var TruckA, TruckB string
 	var truckALoc, truckBLoc int
 	var err error
-	shim.SetLoggingLevel(shim.LogLevel("DEBUG"))
+
+	//shim.SetLoggingLevel(shim.LogLevel("DEBUG"))
 
 	if len(args) != 4 {
 		return nil, errors.New("Incorrect number of arguments. Expecting 4")
