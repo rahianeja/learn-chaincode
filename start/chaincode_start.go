@@ -92,7 +92,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	// Handle different functions
 	if function == "query" {
 		var TruckA string
-		var err error
+	//	var err error
 		if len(args) != 1 {
 				return nil, errors.New("Incorrect number of arguments, expecting truck name")
 		}
