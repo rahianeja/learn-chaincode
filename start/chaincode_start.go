@@ -106,7 +106,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 			Name:"Vinayak",
 			Status:"Enroute",
 			Time:"33:88",
-			Type:"16 Wheeler"
+			Type:"16 Wheeler",
 		}
 
 		out, err :=	json.Marshal(truck)
