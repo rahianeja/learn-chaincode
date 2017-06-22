@@ -100,12 +100,12 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	if function == "query" {
 
 		truck := Truck{
-			Address: "1,Delhi"
-			Lattitude: "1.2"
-			Longitude:"1.3"
-			Name:"Vinayak"
-			Status:"Enroute"
-			Time:"33:88"
+			Address: "1,Delhi",
+			Lattitude: "1.2",
+			Longitude:"1.3",
+			Name:"Vinayak",
+			Status:"Enroute",
+			Time:"33:88",
 			Type:"16 Wheeler"
 		}
 
