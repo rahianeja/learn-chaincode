@@ -31,7 +31,7 @@ type Truck struct{
 	Name string `json:"name"`
 	Status string `json:"status"`
 	Time string `json:"time"`
-	Type string `json:"type"'
+	Type string `json:"type"`
 }
 
 // ============================================================================================================================
