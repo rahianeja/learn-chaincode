@@ -90,11 +90,18 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	fmt.Println("query is running " + function)
 
 	// Handle different functions
-	if function == "dummy_query" {											//read a variable
-		fmt.Println("hi there " + function)
-		return nil, errors.New("Hello i came as output")
+	if function == "query" {
+		var TruckA string
+		var err error
+		if len(args) != 1 {
+				return nil, errors.New("Incorrect number of arguments, expecting truck name")
+		}
+		TruckA = args[0] //read a variable
+		//Get state from ledger
+		Avalbytes, err := stub.GetState(TruckA)
+
+		return Avalbytes, nil
 	}
 	fmt.Println("query did not find func: " + function)						//error
-
 	return nil, errors.New("Received unknown function query: " + function)
 }
