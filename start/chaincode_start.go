@@ -97,7 +97,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		if err != nil {
 			return nil, err
 		}
-		return Success("X value is set")
+		return success("X value is set")
 	}
 	fmt.Println("invoke did not find func: " + function)					//error
 
