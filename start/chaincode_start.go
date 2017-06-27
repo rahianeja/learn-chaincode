@@ -80,6 +80,10 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	if err != nil {
 		return nil, err
 	}
+	err = stub.PutState("Y", []byte(strconv.Itoa(20)))
+	if err != nil {
+		return nil, err
+	}
 
 	return nil, nil
 }
@@ -87,25 +91,12 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 // Invoke is our entry point to invoke a chaincode function
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Println("invoke is running " + function)
-	var err error
-	// Handle different functions
-	if function == "init" {													//initialize the chaincode state, used as reset
-		dataFromEnd := args[0]
 
-	//	var truckData Truck
-	//	json.Unmarshal([]byte(dataFromEnd), &truckData)
-
-	//	jsonAsBytes, err :=	json.Marshal(truckData)
-	//	if err != nil {
-	//	fmt.Println("error:", err)
-	//	}
-		err = stub.PutState("a", []byte("48"))
-		err = stub.PutState("data", []byte(dataFromEnd))
-		//err = stub.PutState("data", jsonAsBytes)
+	if function == "setX" {													//initialize the chaincode state, used as reset
+		err = stub.PutState("X", []byte(strconv.Itoa(21)))
 		if err != nil {
-		    return nil, err
+			return nil, err
 		}
-		return t.Init(stub, "init", args)
 	}
 	fmt.Println("invoke did not find func: " + function)					//error
 
@@ -129,7 +120,17 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 			Time:"33:88",
 			Type:"16 Wheeler",
 		} */
-		jsonAsBytes, err = stub.GetState("a")
+		yVAl, err = stub.GetState("Y")
+		if err != nil{
+			return nil, err
+		}
+
+		xVAl, err = stub.GetState("X")
+		if err != nil{
+			return nil, err
+		}
+
+		aVAl, err = stub.GetState("a")
 		if err != nil{
 			return nil, err
 		}
@@ -154,7 +155,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 			jsonResp :="{\"Error\":\"Failed to get state for" + TruckA + "\"}"
 			return nil, errors.New(jsonResp)
 		}
-		return jsonAsBytes, nil
+		return yVAL+xVAL+aVAL, nil
 	}
 	fmt.Println("query did not find func: " + function)						//error
 	return nil, errors.New("Received unknown function query: " + function)
