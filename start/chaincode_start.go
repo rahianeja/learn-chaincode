@@ -110,7 +110,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	var err error
 	// Handle different functions
 	if function == "query" {
-	var yVAl, xVAl, aVAl []byte
+	var yVAL, xVAL, aVAL []byte
 	/*	truck := Truck{
 			Address: "1,Delhi",
 			Lattitude: "1.2",
@@ -120,17 +120,17 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 			Time:"33:88",
 			Type:"16 Wheeler",
 		} */
-		yVAl, err = stub.GetState("Y")
+		yVAL, err = stub.GetState("Y")
 		if err != nil{
 			return nil, err
 		}
 
-		xVAl, err = stub.GetState("X")
+		xVAL, err = stub.GetState("X")
 		if err != nil{
 			return nil, err
 		}
 
-		aVAl, err = stub.GetState("a")
+		aVAL, err = stub.GetState("a")
 		if err != nil{
 			return nil, err
 		}
