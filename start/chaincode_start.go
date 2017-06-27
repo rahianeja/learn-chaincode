@@ -97,6 +97,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		if err != nil {
 			return nil, err
 		}
+		return shim.Success("X value is set")
 	}
 	fmt.Println("invoke did not find func: " + function)					//error
 
@@ -110,7 +111,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	var err error
 	// Handle different functions
 	if function == "query" {
-	var yVAL []byte
+	var xVAL []byte
 	/*	truck := Truck{
 			Address: "1,Delhi",
 			Lattitude: "1.2",
@@ -120,7 +121,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 			Time:"33:88",
 			Type:"16 Wheeler",
 		} */
-		yVAL, err = stub.GetState("Y")
+		xVAL, err = stub.GetState("X")
 		if err != nil{
 			return nil, err
 		}
@@ -155,7 +156,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 			jsonResp :="{\"Error\":\"Failed to get state for" + TruckA + "\"}"
 			return nil, errors.New(jsonResp)
 		}
-		return yVAL, nil
+		return xVAL, nil
 	}
 	fmt.Println("query did not find func: " + function)						//error
 	return nil, errors.New("Received unknown function query: " + function)
