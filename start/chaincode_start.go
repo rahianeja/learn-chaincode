@@ -155,7 +155,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 			jsonResp :="{\"Error\":\"Failed to get state for" + TruckA + "\"}"
 			return nil, errors.New(jsonResp)
 		}
-		return string(yVAL) + string(xVAL) + string(aVAL), nil
+		return xVAL, nil
 	}
 	fmt.Println("query did not find func: " + function)						//error
 	return nil, errors.New("Received unknown function query: " + function)
