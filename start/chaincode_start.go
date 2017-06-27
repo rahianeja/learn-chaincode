@@ -94,12 +94,12 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		var truckData Truck
 		json.Unmarshal([]byte(dataFromEnd), &truckData)
 
-		jsonAsBytes, err :=	json.Marshal(truckData)
-		if err != nil {
-		fmt.Println("error:", err)
-		}
+		//jsonAsBytes, err :=	json.Marshal(truckData)
+		//if err != nil {
+		//fmt.Println("error:", err)
+		//}
 
-		err = stub.PutState("data", jsonAsBytes)
+		err = stub.PutState("data", truckData)
 		if err != nil {
 		    return nil, err
 		}
@@ -127,18 +127,16 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 			Time:"33:88",
 			Type:"16 Wheeler",
 		} */
-		jsonAsBytes, err = stub.GetState("data")
+		jsonAsTruck, err = stub.GetState("data")
 		if err != nil{
 			return nil, err
 		}
 
-		if jsonAsBytes == nil{
+		if jsonAsTruck == nil{
 			return nil, errors.New("Get state did not return data")
 		}
 
-		var out Truck
-
-		err :=	json.Unmarshal(string(jsonAsBytes), &out)
+		outTruckData, err :=	json.Marshal(jsonAsTruck)
 		if err != nil {
 		fmt.Println("error:", err)
 		}
@@ -155,7 +153,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 			jsonResp :="{\"Error\":\"Failed to get state for" + TruckA + "\"}"
 			return nil, errors.New(jsonResp)
 		}
-		return out, nil
+		return outTruckData, nil
 	}
 	fmt.Println("query did not find func: " + function)						//error
 	return nil, errors.New("Received unknown function query: " + function)
