@@ -91,7 +91,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 // Invoke is our entry point to invoke a chaincode function
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Println("invoke is running " + function)
-
+	var err error
 	if function == "setX" {													//initialize the chaincode state, used as reset
 		err = stub.PutState("X", []byte(strconv.Itoa(21)))
 		if err != nil {
@@ -106,7 +106,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 // Query is our entry point for queries
 func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Println("query is running " + function)
-	var jsonAsBytes []byte
+	var yVAl, xVAl, aVAl []byte
 	var err error
 	// Handle different functions
 	if function == "query" {
@@ -155,7 +155,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 			jsonResp :="{\"Error\":\"Failed to get state for" + TruckA + "\"}"
 			return nil, errors.New(jsonResp)
 		}
-		return yVAL+xVAL+aVAL, nil
+		return string(yVAL) + string(xVAL) + string(aVAL), nil
 	}
 	fmt.Println("query did not find func: " + function)						//error
 	return nil, errors.New("Received unknown function query: " + function)
