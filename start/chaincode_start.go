@@ -131,7 +131,11 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 		if err != nil{
 			return nil, err
 		}
-		out, err :=	json.Marshal(jsonAsBytes)
+
+		if jsonAsBytes == nil{
+			return nil, errors.New("Get state did not return data")
+		}
+		out, err :=	json.Unmarshal(jsonAsBytes)
 		if err != nil {
 		fmt.Println("error:", err)
 		}
