@@ -87,12 +87,12 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 // Invoke is our entry point to invoke a chaincode function
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Println("invoke is running " + function)
-	var dataFromEnd []byte
 	// Handle different functions
 	if function == "init" {													//initialize the chaincode state, used as reset
 		dataFromEnd := args[0]
+
 		var truckData Truck
-		json.Unmarshal(dataFromEnd, &truckData)
+		json.Unmarshal([]byte(dataFromEnd), &truckData)
 
 		jsonAsBytes, err :=	json.Marshal(truck)
 		if err != nil {
