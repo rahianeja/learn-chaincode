@@ -94,7 +94,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		var truckData Truck
 		json.Unmarshal([]byte(dataFromEnd), &truckData)
 
-		jsonAsBytes, err :=	json.Marshal(truck)
+		jsonAsBytes, err :=	json.Marshal(truckData)
 		if err != nil {
 		fmt.Println("error:", err)
 		}
