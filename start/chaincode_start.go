@@ -99,7 +99,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	//	if err != nil {
 	//	fmt.Println("error:", err)
 	//	}
-
+		err = stub.PutState("a", []byte("48"))
 		err = stub.PutState("data", []byte(dataFromEnd))
 		//err = stub.PutState("data", jsonAsBytes)
 		if err != nil {
@@ -129,7 +129,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 			Time:"33:88",
 			Type:"16 Wheeler",
 		} */
-		jsonAsBytes, err = stub.GetState("data")
+		jsonAsBytes, err = stub.GetState("a")
 		if err != nil{
 			return nil, err
 		}
