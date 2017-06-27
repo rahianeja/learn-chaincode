@@ -117,7 +117,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	// Handle different functions
 	if function == "query" {
 
-		truck := Truck{
+	/*	truck := Truck{
 			Address: "1,Delhi",
 			Lattitude: "1.2",
 			Longitude:"1.3",
@@ -125,9 +125,10 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 			Status:"Enroute",
 			Time:"33:88",
 			Type:"16 Wheeler",
-		}
+		} */
+		jsonAsBytes, err = stub.GetState("data", jsonAsBytes)
 
-		out, err :=	json.Marshal(truck)
+		out, err :=	json.Marshal(jsonAsBytes)
 		if err != nil {
 		fmt.Println("error:", err)
 		}
