@@ -49,38 +49,18 @@ func main() {
 
 // Init resets all the things
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	var TruckA, TruckB string
-	var truckALoc, truckBLoc int
+	var jsonData string
 	var err error
 
 	//shim.SetLoggingLevel(shim.LogLevel("DEBUG"))
 
-	if len(args) != 4 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 4")
+	if len(args) != 1 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 1")
 	}
 
 	//initialize the chaincode
-	TruckA = args[0];
-	truckALoc, err = strconv.Atoi(args[1]);
-	if err != nil {
-		return nil, errors.New("Expecting int value for truck A location");
-	}
-
-	TruckB = args[2];
-	truckBLoc, err = strconv.Atoi(args[3]);
-	if err != nil {
-		return nil, errors.New("Expecting int value for truck B location");
-	}
-
-	err = stub.PutState(TruckA, []byte(strconv.Itoa(truckALoc)))
-	if err != nil {
-		return nil, err
-	}
-	err = stub.PutState(TruckB, []byte(strconv.Itoa(truckBLoc)))
-	if err != nil {
-		return nil, err
-	}
-	err = stub.PutState("Y", []byte(strconv.Itoa(20)))
+	jsonData = args[0];
+	err = stub.PutState("truckData", []byte(jsonData))
 	if err != nil {
 		return nil, err
 	}
@@ -92,8 +72,15 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Println("invoke is running " + function)
 	var err error
-	if function == "setX" {													//initialize the chaincode state, used as reset
-		err = stub.PutState("Y", []byte(strconv.Itoa(21)))
+	var updatedJsonData string
+	if len(args) != 1 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 1")
+	}
+
+	if function == "updateLoc" {
+		updatedJsonData = args[0];
+													//initialize the chaincode state, used as reset
+		err = stub.PutState("truckData", []byte(updatedJsonData))
 		if err != nil {
 			return nil, err
 		}
@@ -107,56 +94,14 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 // Query is our entry point for queries
 func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Println("query is running " + function)
-	var yVAL []byte
 	var err error
 	// Handle different functions
 	if function == "query" {
-
-	/*	truck := Truck{
-			Address: "1,Delhi",
-			Lattitude: "1.2",
-			Longitude:"1.3",
-			Name:"Vinayak",
-			Status:"Enroute",
-			Time:"33:88",
-			Type:"16 Wheeler",
-		} */
-		yVAL, err = stub.GetState("Y")
+		latestTruckData, err = stub.GetState("truckData")
 		if err != nil{
 			return nil, err
 		}
-
-		// xVAL, err = stub.GetState("X")
-		// if err != nil{
-		// 	return nil, err
-		// }
-		//
-		// aVAL, err = stub.GetState("a")
-		// if err != nil{
-		// 	return nil, err
-		// }
-
-
-		//var out Truck
-
-		//err :=	json.Unmarshal(jsonAsBytes, &out)
-		//if err != nil {
-		//fmt.Println("error:", err)
-		//}
-
-		var TruckA string
-	//	var err error
-		if len(args) != 1 {
-				return nil, errors.New("Incorrect number of arguments, expecting truck name")
-		}
-		TruckA = args[0] //read a variable
-		//Get state from ledger
-		//Avalbytes, err := stub.GetState(TruckA)
-		if err != nil {
-			jsonResp :="{\"Error\":\"Failed to get state for" + TruckA + "\"}"
-			return nil, errors.New(jsonResp)
-		}
-		return yVAL, nil
+		return latestTruckData, nil
 	}
 	fmt.Println("query did not find func: " + function)						//error
 	return nil, errors.New("Received unknown function query: " + function)
