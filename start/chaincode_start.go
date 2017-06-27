@@ -95,6 +95,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Println("query is running " + function)
 	var err error
+	var latestTruckData []byte
 	// Handle different functions
 	if function == "query" {
 		latestTruckData, err = stub.GetState("truckData")
