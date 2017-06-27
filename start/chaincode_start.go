@@ -90,9 +90,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
 	// Handle different functions
 	if function == "init" {													//initialize the chaincode state, used as reset
-
-
-		dataFromEnd, err := args[0]
+		dataFromEnd := args[0]
 		var truckData Truck
 		json.Unmarshal(dataFromEnd, &truckData)
 
