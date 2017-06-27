@@ -80,6 +80,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	if err != nil {
 		return nil, err
 	}
+
 	return nil, nil
 }
 
@@ -89,6 +90,17 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
 	// Handle different functions
 	if function == "init" {													//initialize the chaincode state, used as reset
+
+
+		dataFromEnd, err := args[0]
+		var truckData Truck
+		json.Unmarshal(dataFromEnd, &truckData)
+
+		jsonAsBytes, _ = json.Marshal(truckData)
+		err = stub.PutState("data", jsonAsBytes)
+		if err != nil {
+		    return nil, err
+		}
 		return t.Init(stub, "init", args)
 	}
 	fmt.Println("invoke did not find func: " + function)					//error
