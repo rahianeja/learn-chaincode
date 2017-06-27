@@ -114,6 +114,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Println("query is running " + function)
 	var jsonAsBytes []byte
+	var err error
 	// Handle different functions
 	if function == "query" {
 
@@ -127,7 +128,9 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 			Type:"16 Wheeler",
 		} */
 		jsonAsBytes, err = stub.GetState("data")
-
+		if err != nil{
+			return nil, err
+		}
 		out, err :=	json.Marshal(jsonAsBytes)
 		if err != nil {
 		fmt.Println("error:", err)
