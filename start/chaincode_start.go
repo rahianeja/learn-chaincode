@@ -91,8 +91,13 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	if function == "init" {													//initialize the chaincode state, used as reset
 		dataFromEnd := args[0]
 
+		bytes, err := json.Marshal(dataFromEnd)
+	     if err != nil {
+	        fmt.Println("error:", err)
+	     }
+
 		var truckData Truck
-		json.Unmarshal([]byte(dataFromEnd), &truckData)
+		json.Unmarshal([]byte(bytes), &truckData)
 
 		jsonAsBytes, err :=	json.Marshal(truckData)
 		if err != nil {
