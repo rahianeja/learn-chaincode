@@ -138,7 +138,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 
 		var out Truck
 
-		err :=	json.Unmarshal(jsonAsBytes, &out)
+		err :=	json.Unmarshal([]byte(jsonAsBytes), &out)
 		if err != nil {
 		fmt.Println("error:", err)
 		}
