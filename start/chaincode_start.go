@@ -107,11 +107,21 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 // Query is our entry point for queries
 func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Println("query is running " + function)
-
+	var xVAL []byte
 	var err error
+
+	if function == "setData" {
+		err = stub.PutState("X", []byte(strconv.Itoa(23)))
+		if err != nil {
+			return nil, err
+		}
+
+		return nil, nil
+
+	}
 	// Handle different functions
 	if function == "query" {
-	var xVAL []byte
+
 	/*	truck := Truck{
 			Address: "1,Delhi",
 			Lattitude: "1.2",
