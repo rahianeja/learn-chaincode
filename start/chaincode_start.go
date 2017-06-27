@@ -127,7 +127,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 			Time:"33:88",
 			Type:"16 Wheeler",
 		} */
-		jsonAsBytes = stub.GetState("data", jsonAsBytes)
+		jsonAsBytes, err = stub.GetState("data")
 
 		out, err :=	json.Marshal(jsonAsBytes)
 		if err != nil {
