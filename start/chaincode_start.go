@@ -26,14 +26,47 @@ import (
 // SimpleChaincode example simple Chaincode implementation
 type SimpleChaincode struct{
 }
-type Truck struct{
-	Address string `json:"address"`
-	Lattitude string `json:"lat"`
-	Longitude string `json:"long"`
-	Name string `json:"name"`
-	Status string `json:"status"`
-	Time string `json:"time"`
-	Type string `json:"type"`
+type TruckData struct {
+	Truck1 struct {
+		Address string `json:"address"`
+		Lat float64 `json:"lat"`
+		Long float64 `json:"long"`
+		Name string `json:"name"`
+		Shock float64 `json:"shock"`
+		Status string `json:"status"`
+		Time float64 `json:"time"`
+		Type string `json:"type"`
+	} `json:"Truck1"`
+	Truck2 struct {
+		Address string `json:"address"`
+		Lat float64 `json:"lat"`
+		Long float64 `json:"long"`
+		Name string `json:"name"`
+		Shock float64 `json:"shock"`
+		Status string `json:"status"`
+		Time float64 `json:"time"`
+		Type string `json:"type"`
+	} `json:"Truck2"`
+	Truck3 struct {
+		Address string `json:"address"`
+		Lat float64 `json:"lat"`
+		Long float64 `json:"long"`
+		Name string `json:"name"`
+		Shock float64 `json:"shock"`
+		Status string `json:"status"`
+		Time float64 `json:"time"`
+		Type string `json:"type"`
+	} `json:"Truck3"`
+	Truck4 struct {
+		Address string `json:"address"`
+		Lat float64 `json:"lat"`
+		Long float64 `json:"long"`
+		Name string `json:"name"`
+		Shock float64 `json:"shock"`
+		Status string `json:"status"`
+		Time float64 `json:"time"`
+		Type string `json:"type"`
+	} `json:"Truck4"`
 }
 
 // ============================================================================================================================
@@ -83,6 +116,12 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		if err != nil {
 			return nil, err
 		}
+		var stateArg TruckData
+		err = json.Unmarshal([]byte(updatedJsonData), &stateArg)
+		if err != nil {
+		return nil, errors.New("Truckdata argument unmarshal failed: " + fmt.Sprint(err))
+		}
+
 		return nil, nil
 	}
 	fmt.Println("invoke did not find func: " + function)					//error
