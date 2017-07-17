@@ -125,7 +125,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		return nil, errors.New("Truckdata argument unmarshal failed: " + fmt.Sprint(err))
 		}
 		fmt.Println("metal copied json to struct")
-		fmt.Println("metal copied json to struct" + stateArg.Truck1.Address())
+		fmt.Println("metal copied json to struct" + stateArg.Truck1.Address)
 		return nil, nil
 	}
 	fmt.Println("invoke did not find func: " + function)					//error
