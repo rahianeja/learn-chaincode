@@ -127,7 +127,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		fmt.Println("metal copied json to struct")
 		if stateArg.Truck1.Shock > 2.8 {
 			fmt.Println("Truck 1 Violated shock")
-			err = stub.PutState("truck1Violations", []byte(stateArg.Truck1.Shock))
+			err = stub.PutState("truck1Violations", string(stateArg.Truck1.Shock))
 			if err != nil {
 				fmt.Println("Could not save Truck1 Violation")
 				return nil, err
