@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
   "encoding/json"
+	"strconv"
 
 )
 
@@ -104,13 +105,9 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 }
 
 
-func float64ToByte(f float64) []byte {
-	buf := new(bytes.Buffer)
-	err := binary.Write(buf, binary.BigEndian, f)
-	if err != nil {
-		fmt.Println("binary.Write failed:", err)
-	}
-	return buf.Bytes()
+func FloatToString(input_num float64) string {
+    // to convert a float number to a string
+    return strconv.FormatFloat(input_num, 'f', 6, 64)
 }
 
 // Invoke is our entry point to invoke a chaincode function
@@ -137,12 +134,13 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		fmt.Println("metal copied json to struct")
 		if stateArg.Truck1.Shock > 2.8 {
 			fmt.Println("Truck 1 Violated shock")
-			var result []byte = float64ToByte(stateArg.Truck1.Shock)
-			err = stub.PutState("truck1Violations", result)
-			if err != nil {
-				fmt.Println("Could not save Truck1 Violation")
-				return nil, err
-			}
+			//var result []byte = float64ToByte(stateArg.Truck1.Shock)
+			//err = stub.PutState("truck1Violations", result)
+			fmt.Println("Truck 1 Violated shock" + FloatToString(stateArg.Truck1.Shock))
+			// if err != nil {
+			// 	fmt.Println("Could not save Truck1 Violation")
+			// 	return nil, err
+			// }
 			fmt.Println("Truck 1 Violation saved")
 		}
 		return nil, nil
