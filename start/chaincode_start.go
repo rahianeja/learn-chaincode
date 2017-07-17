@@ -139,7 +139,11 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	var latestTruckData []byte
 	// Handle different functions
 	if function == "query" {
-		latestTruckData = []byte{'n', 'o', 'l', 'a', 'n', 'g'}
+		//latestTruckData = []byte{'n', 'o', 'l', 'a', 'n', 'g'}
+		latestTruckData, err = stub.GetState("truckData")
+		if err != nil{
+  			return nil, err
+  		}
 		return latestTruckData, nil
 	}
 	fmt.Println("query did not find func: " + function)						//error
