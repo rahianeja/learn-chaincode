@@ -125,7 +125,15 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		return nil, errors.New("Truckdata argument unmarshal failed: " + fmt.Sprint(err))
 		}
 		fmt.Println("metal copied json to struct")
-		fmt.Println("metal copied json to struct" + stateArg.Truck1.Address)
+		if stateArg.Truck1.Shock > 2.8 {
+			fmt.Println("Truck 1 Violated shock")
+			err = stub.PutState("truck1Violations", []byte(stateArg.Truck1.Shock))
+			if err != nil {
+				fmt.Println("Could not save Truck1 Violation")
+				return nil, err
+			}
+			fmt.Println("Truck 1 Violation saved")
+		}
 		return nil, nil
 	}
 	fmt.Println("invoke did not find func: " + function)					//error
