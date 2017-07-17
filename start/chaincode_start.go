@@ -137,7 +137,8 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	var latestTruckData []byte
 	// Handle different functions
 	if function == "query" {
-		latestTruckData, err = stub.GetState("truckData")
+		//latestTruckData, err = stub.GetState("truckData")
+		latestTruckData, err = byte[]("There are these two young fish swimming along and they happen to meet an older fish swimming the other way")
 		if err != nil{
 			return nil, err
 		}
