@@ -136,11 +136,14 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 			fmt.Println("Truck 1 Violated shock")
 			//var result []byte = float64ToByte(stateArg.Truck1.Shock)
 			//err = stub.PutState("truck1Violations", result)
-			fmt.Println("Truck 1 Violated shock" + FloatToString(stateArg.Truck1.Shock))
-			// if err != nil {
-			// 	fmt.Println("Could not save Truck1 Violation")
-			// 	return nil, err
-			// }
+			var shockStr string
+			shockStr = FloatToString(stateArg.Truck1.Shock)
+			fmt.Println("Truck 1 Violated shock" + shockStr)
+			err = stub.PutState("truck1Violations", []byte(shockStr))
+			 if err != nil {
+			 	fmt.Println("Could not save Truck1 Violation")
+			 	return nil, err
+			 }
 			fmt.Println("Truck 1 Violation saved")
 		}
 		return nil, nil
