@@ -82,11 +82,15 @@ func main() {
 
 // Init resets all the things
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+<<<<<<< HEAD
 	var jsonData string
 	var err error
 
 	//shim.SetLoggingLevel(shim.LogLevel("DEBUG"))
 
+=======
+	fmt.Println("Inside Init block ! Awesome")
+>>>>>>> origin
 	if len(args) != 1 {
 		return nil, errors.New("Incorrect number of arguments. Expecting 1")
 	}
