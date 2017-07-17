@@ -103,6 +103,16 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	return nil, nil
 }
 
+
+func float64ToByte(f float64) []byte {
+	buf := new(bytes.Buffer)
+	err := binary.Write(buf, binary.BigEndian, f)
+	if err != nil {
+		fmt.Println("binary.Write failed:", err)
+	}
+	return buf.Bytes()
+}
+
 // Invoke is our entry point to invoke a chaincode function
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Println("metal invoke is running " + function)
@@ -127,7 +137,8 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		fmt.Println("metal copied json to struct")
 		if stateArg.Truck1.Shock > 2.8 {
 			fmt.Println("Truck 1 Violated shock")
-			err = stub.PutState("truck1Violations", []byte(stateArg.Truck1.Shock))
+			var result []byte = float64ToByte(stateArg.Truck1.Shock)
+			err = stub.PutState("truck1Violations", result)
 			if err != nil {
 				fmt.Println("Could not save Truck1 Violation")
 				return nil, err
