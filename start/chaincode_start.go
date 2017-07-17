@@ -105,7 +105,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 
 // Invoke is our entry point to invoke a chaincode function
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	fmt.Println("invoke is running " + function)
+	fmt.Println("metal invoke is running " + function)
 	var err error
 	var updatedJsonData string
 	if len(args) != 1 {
@@ -128,6 +128,8 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		if err != nil {
 		return nil, errors.New("Truckstate argument putstate failed: " + fmt.Sprint(err))
 		}
+		fmt.Println("metal copied json to struct")
+		fmt.Println("metal copied json to struct" + stateArg.Truck1.Address())
 		return nil, nil
 	}
 	fmt.Println("invoke did not find func: " + function)					//error
