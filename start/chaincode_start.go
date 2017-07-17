@@ -160,8 +160,17 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	var latestTruckData []byte
 	// Handle different functions
 	if function == "query" {
-		//latestTruckData = []byte{'n', 'o', 'l', 'a', 'n', 'g'}
-	//	latestTruckData, err = stub.GetState("truckData")
+	latestTruckData, err = stub.GetState("truckData")
+	//latestTruckData, err = stub.GetState("truck1Violations")
+
+		if err != nil{
+  			return nil, err
+  		}
+		return latestTruckData, nil
+	}
+
+	if function == "violation" {
+	//latestTruckData, err = stub.GetState("truckData")
 	latestTruckData, err = stub.GetState("truck1Violations")
 
 		if err != nil{
