@@ -124,7 +124,10 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		if err != nil {
 		return nil, errors.New("Truckdata argument unmarshal failed: " + fmt.Sprint(err))
 		}
-
+		err =  stub.PutState("truckState", stateArg)
+		if err != nil {
+		return nil, errors.New("Truckstate argument putstate failed: " + fmt.Sprint(err))
+		}
 		return nil, nil
 	}
 	fmt.Println("invoke did not find func: " + function)					//error
