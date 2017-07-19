@@ -144,30 +144,43 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 			 return nil, err
 			}
 
-			strVoilatedData, err := string(violatedTruckData)
-			if err != nil {
-			 fmt.Println("Could not convert Truck1 Violation count byte to string")
-			 return nil, err
-			}
+			if violatedTruckData != nil {
 
-			count, err := strconv.Atoi(strVoilatedData)
-			if err != nil {
-			 fmt.Println("Could not convert Truck1 Violation string to int")
-			 return nil, err
-			}
+				strVoilatedData, err := string(violatedTruckData)
+				if err != nil {
+				 fmt.Println("Could not convert Truck1 Violation count byte to string")
+				 return nil, err
+				}
 
-			count = count + 1
+				count, err := strconv.Atoi(strVoilatedData)
+				if err != nil {
+				 fmt.Println("Could not convert Truck1 Violation string to int")
+				 return nil, err
+				}
 
-			strNewViolatedData, err := Itoa(count)
-			if err != nil {
-			 fmt.Println("Could not convert Truck1 Violation int to string")
-			 return nil, err
-			}
+				count = count + 1
 
-			err = stub.PutState("truck1ViolationsCount",[]byte(strNewViolatedData))
-			if err != nil {
-			 fmt.Println("Could not save Truck1 Violation count")
-			 return nil, err
+				strNewViolatedData, err := strconv.Itoa(count)
+				if err != nil {
+				 fmt.Println("Could not convert Truck1 Violation int to string")
+				 return nil, err
+				}
+
+				err = stub.PutState("truck1ViolationsCount",[]byte(strNewViolatedData))
+				if err != nil {
+				 fmt.Println("Could not save Truck1 Violation count")
+				 return nil, err
+				}
+
+
+			} else {
+
+				err = stub.PutState("truck1ViolationsCount",[]byte("1"))
+				if err != nil {
+				 fmt.Println("Could not save 1 as Truck1 Violation count")
+				 return nil, err
+				}
+
 			}
 
 			var shockStr string
