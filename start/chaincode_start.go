@@ -146,6 +146,51 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 			 }
 			fmt.Println("Truck 1 Violation saved")
 		}
+
+		if stateArg.Truck2.Shock > 2.8 {
+			fmt.Println("Truck 2 Violated shock")
+			//var result []byte = float64ToByte(stateArg.Truck1.Shock)
+			//err = stub.PutState("truck1Violations", result)
+			var shockStr string
+			shockStr = FloatToString(stateArg.Truck1.Shock)
+			fmt.Println("Truck 2 Violated shock" + shockStr)
+			err = stub.PutState("truck2Violations", []byte(shockStr))
+			 if err != nil {
+			 	fmt.Println("Could not save Truck2 Violation")
+			 	return nil, err
+			 }
+			fmt.Println("Truck 2 Violation saved")
+		}
+
+		if stateArg.Truck3.Shock > 2.8 {
+			fmt.Println("Truck 3 Violated shock")
+			//var result []byte = float64ToByte(stateArg.Truck1.Shock)
+			//err = stub.PutState("truck1Violations", result)
+			var shockStr string
+			shockStr = FloatToString(stateArg.Truck1.Shock)
+			fmt.Println("Truck 3 Violated shock" + shockStr)
+			err = stub.PutState("truck3Violations", []byte(shockStr))
+			 if err != nil {
+			 	fmt.Println("Could not save Truck3 Violation")
+			 	return nil, err
+			 }
+			fmt.Println("Truck 3 Violation saved")
+		}
+
+		if stateArg.Truck4.Shock > 2.8 {
+			fmt.Println("Truck 4 Violated shock")
+			//var result []byte = float64ToByte(stateArg.Truck1.Shock)
+			//err = stub.PutState("truck1Violations", result)
+			var shockStr string
+			shockStr = FloatToString(stateArg.Truck1.Shock)
+			fmt.Println("Truck 4 Violated shock" + shockStr)
+			err = stub.PutState("truck1Violations", []byte(shockStr))
+			 if err != nil {
+			 	fmt.Println("Could not save Truck1 Violation")
+			 	return nil, err
+			 }
+			fmt.Println("Truck 4 Violation saved")
+		}
 		return nil, nil
 	}
 	fmt.Println("invoke did not find func: " + function)					//error
@@ -171,7 +216,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 
 	if function == "violation" {
 	//latestTruckData, err = stub.GetState("truckData")
-	latestTruckData, err = stub.GetState("truck1Violations")
+	latestTruckData, err = stub.GetState("truck3Violations")
 
 		if err != nil{
   			return nil, err
