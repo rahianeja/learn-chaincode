@@ -225,7 +225,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 			var shockStr string
 			shockStr = FloatToString(stateArg.Truck4.Shock)
 			fmt.Println("Truck 4 Violated shock" + shockStr)
-			err = stub.PutState("truck1Violations", []byte(shockStr))
+			err = stub.PutState("truck4Violations", []byte(shockStr))
 			 if err != nil {
 			 	fmt.Println("Could not save Truck1 Violation")
 			 	return nil, err
@@ -256,7 +256,34 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 		return latestTruckData, nil
 	}
 
-	if function == "violation" {
+	if function == "violationT1" {
+	//latestTruckData, err = stub.GetState("truckData")
+	latestTruckData, err = stub.GetState("truck1Violations")
+
+		if err != nil{
+  			return nil, err
+  		}
+		return latestTruckData, nil
+	}
+	if function == "violationT2" {
+	//latestTruckData, err = stub.GetState("truckData")
+	latestTruckData, err = stub.GetState("truck1Violations")
+
+		if err != nil{
+  			return nil, err
+  		}
+		return latestTruckData, nil
+	}
+	if function == "violationT3" {
+	//latestTruckData, err = stub.GetState("truckData")
+	latestTruckData, err = stub.GetState("truck1Violations")
+
+		if err != nil{
+  			return nil, err
+  		}
+		return latestTruckData, nil
+	}
+	if function == "violationT4" {
 	//latestTruckData, err = stub.GetState("truckData")
 	latestTruckData, err = stub.GetState("truck1Violations")
 
