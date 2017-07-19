@@ -292,7 +292,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	}
 	if function == "violationT2" {
 	//latestTruckData, err = stub.GetState("truckData")
-	latestTruckData, err = stub.GetState("truck1Violations")
+	latestTruckData, err = stub.GetState("truck2Violations")
 
 		if err != nil{
   			return nil, err
@@ -301,7 +301,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	}
 	if function == "violationT3" {
 	//latestTruckData, err = stub.GetState("truckData")
-	latestTruckData, err = stub.GetState("truck1Violations")
+	latestTruckData, err = stub.GetState("truck3Violations")
 
 		if err != nil{
   			return nil, err
@@ -310,7 +310,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	}
 	if function == "violationT4" {
 	//latestTruckData, err = stub.GetState("truckData")
-	latestTruckData, err = stub.GetState("truck1Violations")
+	latestTruckData, err = stub.GetState("truck4Violations")
 
 		if err != nil{
   			return nil, err
@@ -318,7 +318,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 		return latestTruckData, nil
 	}
 
-	if function == "violationCount" {
+	if function == "violationT1Count" {
 	//latestTruckData, err = stub.GetState("truckData")
 	latestTruckData, err = stub.GetState("truck1ViolationsCount")
 
@@ -328,7 +328,35 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 		return latestTruckData, nil
 	}
 
+	if function == "violationT2Count" {
+	//latestTruckData, err = stub.GetState("truckData")
+	latestTruckData, err = stub.GetState("truck2ViolationsCount")
 
+		if err != nil{
+  			return nil, err
+  		}
+		return latestTruckData, nil
+	}
+
+	if function == "violationT3Count" {
+	//latestTruckData, err = stub.GetState("truckData")
+	latestTruckData, err = stub.GetState("truck3ViolationsCount")
+
+		if err != nil{
+				return nil, err
+			}
+		return latestTruckData, nil
+	}
+
+	if function == "violationT4Count" {
+	//latestTruckData, err = stub.GetState("truckData")
+	latestTruckData, err = stub.GetState("truck4ViolationsCount")
+
+		if err != nil{
+  			return nil, err
+  		}
+		return latestTruckData, nil
+	}
 	//if function == "keyHistory" {
 	//latestTruckData, err = stub.GetState("truckData")
 	// latestTruckData, err = stub.GetHistoryForKey("truck3Violations")
