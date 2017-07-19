@@ -116,7 +116,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	var err error
 	var updatedJsonData string
 	var violatedTruckData []byte
-	var strNewViolatedData int
+	var strNewViolatedData string
 	var strVoilatedData string
 	if len(args) != 1 {
 		return nil, errors.New("Incorrect number of arguments. Expecting 1")
@@ -148,11 +148,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
 			if violatedTruckData != nil {
 
-				strVoilatedData, err = string(violatedTruckData)
-				if err != nil {
-				 fmt.Println("Could not convert Truck1 Violation count byte to string")
-				 return nil, err
-				}
+				strVoilatedData = string(violatedTruckData)
 
 				count, err := strconv.Atoi(strVoilatedData)
 				if err != nil {
@@ -162,11 +158,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
 				count = count + 1
 
-				strNewViolatedData, err = strconv.Itoa(count)
-				if err != nil {
-				 fmt.Println("Could not convert Truck1 Violation int to string")
-				 return nil, err
-				}
+				strNewViolatedData = strconv.Itoa(count)
 
 				err = stub.PutState("truck1ViolationsCount",[]byte(strNewViolatedData))
 				if err != nil {
