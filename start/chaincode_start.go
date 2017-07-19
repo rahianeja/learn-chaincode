@@ -122,6 +122,27 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		return nil, errors.New("Incorrect number of arguments. Expecting 1")
 	}
 
+	if function == "resetViolationCounts" {
+		err = stub.DelKey("truck1ViolationsCount")
+		if err != nil {
+		return nil, errors.New("Truck 1 Violation count deletion error")
+		}
+
+		err = stub.DelKey("truck2ViolationsCount")
+		if err != nil {
+		return nil, errors.New("Truck 2 Violation count deletion error")
+		}
+
+		err = stub.DelKey("truck3ViolationsCount")
+		if err != nil {
+		return nil, errors.New("Truck 3 Violation count deletion error")
+		}
+
+		err = stub.DelKey("truck4ViolationsCount")
+		if err != nil {
+		return nil, errors.New("Truck 4 Violation count deletion error")
+		}
+	}
 	if function == "updateLoc" {
 		updatedJsonData = args[0];
 													//initialize the chaincode state, used as reset
