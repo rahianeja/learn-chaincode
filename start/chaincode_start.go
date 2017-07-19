@@ -123,24 +123,28 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	}
 
 	if function == "resetViolationCounts" {
-		err = stub.DelState("truck1ViolationsCount")
+		err = stub.PutState("truck1ViolationsCount",[]byte(0))
 		if err != nil {
-		return nil, errors.New("Truck 1 Violation count deletion error")
+		 fmt.Println("Could not reset Truck1 Violation count")
+		 return nil, err
 		}
 
-		err = stub.DelState("truck2ViolationsCount")
+		err = stub.PutState("truck2ViolationsCount",[]byte(0))
 		if err != nil {
-		return nil, errors.New("Truck 2 Violation count deletion error")
+		 fmt.Println("Could not reset Truck1 Violation count")
+		 return nil, err
 		}
 
-		err = stub.DelState("truck3ViolationsCount")
+		err = stub.PutState("truck3ViolationsCount",[]byte(0))
 		if err != nil {
-		return nil, errors.New("Truck 3 Violation count deletion error")
+		 fmt.Println("Could not reset Truck1 Violation count")
+		 return nil, err
 		}
 
-		err = stub.DelState("truck4ViolationsCount")
+		err = stub.PutState("truck4ViolationsCount",[]byte(strNewViolatedData))
 		if err != nil {
-		return nil, errors.New("Truck 4 Violation count deletion error")
+		 fmt.Println("Could not reset Truck1 Violation count")
+		 return nil, err
 		}
 	}
 	if function == "updateLoc" {
