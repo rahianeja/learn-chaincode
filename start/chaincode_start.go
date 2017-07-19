@@ -123,22 +123,22 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	}
 
 	if function == "resetViolationCounts" {
-		err = stub.DelKey("truck1ViolationsCount")
+		err = stub.DelState("truck1ViolationsCount")
 		if err != nil {
 		return nil, errors.New("Truck 1 Violation count deletion error")
 		}
 
-		err = stub.DelKey("truck2ViolationsCount")
+		err = stub.DelState("truck2ViolationsCount")
 		if err != nil {
 		return nil, errors.New("Truck 2 Violation count deletion error")
 		}
 
-		err = stub.DelKey("truck3ViolationsCount")
+		err = stub.DelState("truck3ViolationsCount")
 		if err != nil {
 		return nil, errors.New("Truck 3 Violation count deletion error")
 		}
 
-		err = stub.DelKey("truck4ViolationsCount")
+		err = stub.DelState("truck4ViolationsCount")
 		if err != nil {
 		return nil, errors.New("Truck 4 Violation count deletion error")
 		}
