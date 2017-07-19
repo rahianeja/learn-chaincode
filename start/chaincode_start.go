@@ -152,7 +152,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 			//var result []byte = float64ToByte(stateArg.Truck1.Shock)
 			//err = stub.PutState("truck1Violations", result)
 			var shockStr string
-			shockStr = FloatToString(stateArg.Truck1.Shock)
+			shockStr = FloatToString(stateArg.Truck2.Shock)
 			fmt.Println("Truck 2 Violated shock" + shockStr)
 			err = stub.PutState("truck2Violations", []byte(shockStr))
 			 if err != nil {
@@ -167,7 +167,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 			//var result []byte = float64ToByte(stateArg.Truck1.Shock)
 			//err = stub.PutState("truck1Violations", result)
 			var shockStr string
-			shockStr = FloatToString(stateArg.Truck1.Shock)
+			shockStr = FloatToString(stateArg.Truck3.Shock)
 			fmt.Println("Truck 3 Violated shock" + shockStr)
 			err = stub.PutState("truck3Violations", []byte(shockStr))
 			 if err != nil {
@@ -182,7 +182,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 			//var result []byte = float64ToByte(stateArg.Truck1.Shock)
 			//err = stub.PutState("truck1Violations", result)
 			var shockStr string
-			shockStr = FloatToString(stateArg.Truck1.Shock)
+			shockStr = FloatToString(stateArg.Truck4.Shock)
 			fmt.Println("Truck 4 Violated shock" + shockStr)
 			err = stub.PutState("truck1Violations", []byte(shockStr))
 			 if err != nil {
