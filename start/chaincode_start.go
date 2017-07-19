@@ -256,13 +256,24 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 
 	if function == "violation" {
 	//latestTruckData, err = stub.GetState("truckData")
-	latestTruckData, err = stub.GetState("truck3Violations")
+	latestTruckData, err = stub.GetState("truck1Violations")
 
 		if err != nil{
   			return nil, err
   		}
 		return latestTruckData, nil
 	}
+
+	if function == "violationCount" {
+	//latestTruckData, err = stub.GetState("truckData")
+	latestTruckData, err = stub.GetState("truck1ViolationsCount")
+
+		if err != nil{
+  			return nil, err
+  		}
+		return latestTruckData, nil
+	}
+
 
 	//if function == "keyHistory" {
 	//latestTruckData, err = stub.GetState("truckData")
