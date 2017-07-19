@@ -115,6 +115,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	fmt.Println("metal invoke is running " + function)
 	var err error
 	var updatedJsonData string
+	var violatedTruckData []byte
 	if len(args) != 1 {
 		return nil, errors.New("Incorrect number of arguments. Expecting 1")
 	}
@@ -133,9 +134,42 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		}
 		fmt.Println("metal copied json to struct")
 		if stateArg.Truck1.Shock > 2.8 {
+
 			fmt.Println("Truck 1 Violated shock")
 			//var result []byte = float64ToByte(stateArg.Truck1.Shock)
 			//err = stub.PutState("truck1Violations", result)
+			violatedTruckData, err = stub.GetState("truck1ViolationsCount")
+			if err != nil {
+			 fmt.Println("Could get Truck1 Violation count in bytes")
+			 return nil, err
+			}
+
+			strVoilatedData, err := string(violatedTruckData)
+			if err != nil {
+			 fmt.Println("Could not convert Truck1 Violation count byte to string")
+			 return nil, err
+			}
+
+			count, err := strconv.Atoi(strVoilatedData)
+			if err != nil {
+			 fmt.Println("Could not convert Truck1 Violation string to int")
+			 return nil, err
+			}
+
+			count = count + 1
+
+			strNewViolatedData, err := Itoa(count)
+			if err != nil {
+			 fmt.Println("Could not convert Truck1 Violation int to string")
+			 return nil, err
+			}
+
+			err = stub.PutState("truck1ViolationsCount",[]byte(strNewViolatedData))
+			if err != nil {
+			 fmt.Println("Could not save Truck1 Violation count")
+			 return nil, err
+			}
+
 			var shockStr string
 			shockStr = FloatToString(stateArg.Truck1.Shock)
 			fmt.Println("Truck 1 Violated shock" + shockStr)
@@ -148,6 +182,11 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		}
 
 		if stateArg.Truck2.Shock > 2.8 {
+			err = stub.GetState("truck2Violations")
+			if err != nil {
+			 fmt.Println("Could not save Truck2 Violation")
+			 return nil, err
+			}
 			fmt.Println("Truck 2 Violated shock")
 			//var result []byte = float64ToByte(stateArg.Truck1.Shock)
 			//err = stub.PutState("truck1Violations", result)
@@ -203,6 +242,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	fmt.Println("query is running " + function)
 	var err error
 	var latestTruckData []byte
+	//var keyHistory HistoryQueryIteratorInterface
 	// Handle different functions
 	if function == "query" {
 	latestTruckData, err = stub.GetState("truckData")
@@ -223,6 +263,16 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
   		}
 		return latestTruckData, nil
 	}
+
+	//if function == "keyHistory" {
+	//latestTruckData, err = stub.GetState("truckData")
+	// latestTruckData, err = stub.GetHistoryForKey("truck3Violations")
+	//
+	// 	if err != nil{
+  // 			return nil, err
+  // 		}
+	// 	return latestTruckData, nil
+	// }
 	fmt.Println("query did not find func: " + function)						//error
 	return nil, errors.New("Received unknown function query: " + function)
 }
